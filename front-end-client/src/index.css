@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-light: #E7FAFF;
+  --color-brand-main: #0043A2;
+  --color-brand-dark: #051126;
+
+  --color-secondary-light: #B9D9FF;
+  --color-secondary-main: #5D97F5;
+  --color-secondary-dark: #2259B2;
+
+  --color-accent-light: #FFD230;
+  --color-accent-main: #FFB900;
+  --color-accent-dark: #FE9A00;
+
+  --color-content-primary: #1D293D;
+  --color-content-secondary: #45556C;
+  --color-content-tertiary: #90A1B9;
+  --color-content-inverse: #FFFFFF;
+
+  --color-background-main: #F1F5F9;
+  --color-background-light: #F8FAFC;
+  --color-background-dark: #020618;
+
+  --color-border-default: #E2E8F0;
+  --color-border-hover: #CAD5E2;
+  --color-border-dark-default: #1D293D;
+  --color-border-dark-hover: #314158;
+
+  --color-status-success: #10b981;
+  --color-status-warning: #f59e0b;
+  --color-status-error: #e11d48;
+  --color-status-info: #3b82f6;
+
+  --animate-tooltipFadeIn: tooltipFadeIn 0.15s ease-out forwards;
+  --animate-slideInRight: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes tooltipFadeIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideInRight {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background-light);
+    color: var(--color-content-primary);
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  .custom-scrollbar,
+  .hidden-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .custom-scrollbar:hover,
+  .hidden-scrollbar:hover {
+    scrollbar-color: var(--color-border-hover) transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar,
+  .hidden-scrollbar::-webkit-scrollbar {
+    width: 5.5px;
+    height: 5.5px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track,
+  .hidden-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb,
+  .hidden-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb,
+  .hidden-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-hover);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover,
+  .hidden-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-content-tertiary);
+  }
+  .custom-scrollbar::-webkit-scrollbar-button,
+  .custom-scrollbar::-webkit-scrollbar-button:start,
+  .custom-scrollbar::-webkit-scrollbar-button:end,
+  .custom-scrollbar::-webkit-scrollbar-button:vertical,
+  .custom-scrollbar::-webkit-scrollbar-button:horizontal,
+  .custom-scrollbar::-webkit-scrollbar-button:decrement,
+  .custom-scrollbar::-webkit-scrollbar-button:increment,
+  .hidden-scrollbar::-webkit-scrollbar-button,
+  .hidden-scrollbar::-webkit-scrollbar-button:start,
+  .hidden-scrollbar::-webkit-scrollbar-button:end,
+  .hidden-scrollbar::-webkit-scrollbar-button:vertical,
+  .hidden-scrollbar::-webkit-scrollbar-button:horizontal,
+  .hidden-scrollbar::-webkit-scrollbar-button:decrement,
+  .hidden-scrollbar::-webkit-scrollbar-button:increment {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    background: transparent !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-corner,
+  .hidden-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}

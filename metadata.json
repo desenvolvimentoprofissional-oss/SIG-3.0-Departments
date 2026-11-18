@@ -1,0 +1,6 @@
+{
+  "name": "Workspace",
+  "description": "Workspace limpo inicializado sem geração de arquivos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

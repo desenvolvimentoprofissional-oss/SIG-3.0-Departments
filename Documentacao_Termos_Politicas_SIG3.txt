@@ -1,0 +1,154 @@
+DOCUMENTAÇÃO DE COMPONENTES DO MODAL DE TERMOS E POLÍTICAS DO SIG 3.0
+
+Esta documentação contém a transcrição exata, formatação e detalhes de implementação do Popup/Modal de Políticas e Termos.
+
+================================================================================
+1. COMPORTAMENTO E FUNCIONALIDADES DO MODAL
+================================================================================
+O modal possui as seguintes características de interação (gerenciadas pelo hook `useDocumentModal.ts`):
+- Controle de Zoom (Aumentar/Diminuir fonte, em 3 níveis: 0, 1 e 2).
+- Alternância de Tema (Modo Escuro / Claro).
+- Alto Contraste (Cores vibrantes para maior legibilidade).
+- Navegação Cíclica entre os Documentos (Política de Privacidade -> Política de Segurança -> Termos de Uso).
+- Reset (Voltar ao zoom padrão, tema claro e sem alto contraste).
+- Botão "Ver Próximo" no cabeçalho do Modal, apontando sempre para o próximo documento da lista.
+- Animações usando Framer Motion (Fade In, Drop Down com efeito elástico 'spring').
+
+================================================================================
+2. ESTILOS, CORES E TOKENS APLICADOS (Tailwind CSS)
+================================================================================
+O Modal baseia-se em 3 perfis de tema:
+
+- TEMA CLARO (Padrão)
+  Fundo Modal: Branco (`bg-white`)
+  Texto: Cinza Médio (`text-gray-600`)
+  Títulos: Cinza Escuro (`text-gray-900`)
+  Fundo dos Números (Bolinhas): Ciano (`bg-cyan-500`)
+  Texto dos Números: Branco (`text-white`)
+  Sub-títulos: Ciano (`text-cyan-600`)
+  Fundo de Caixas (Destaque): Cinza claro (`bg-gray-50 border-gray-200`)
+  Borda Lateral (Citação): Ciano (`border-cyan-500`)
+  Links: Ciano (`text-cyan-600 hover:text-cyan-700`)
+  Rodapé Texto: Cinza claro (`text-[var(--color-content-tertiary)]`)
+
+- TEMA ESCURO
+  Fundo Modal: Escuro Neutro (`bg-[#1a1b1e] border border-white/10`)
+  Texto: Cinza Claro (`text-gray-300`)
+  Títulos: Branco (`text-white`)
+  Fundo dos Números (Bolinhas): Escuro Médio (`bg-[#2a2b2f]`)
+  Texto dos Números: Secundário Main (`text-[var(--color-secondary-main)]`)
+  Sub-títulos: Secundário Main (`text-[var(--color-secondary-main)]`)
+  Fundo de Caixas (Destaque): Escuro Médio (`bg-[#25262b] border-white/5`)
+  Borda Lateral (Citação): Secundário Main (`border-[var(--color-secondary-main)]`)
+  Links: Secundário Main (`text-[var(--color-secondary-main)] hover:text-white`)
+  Rodapé Texto: Translúcido (`text-white/40`)
+
+- ALTO CONTRASTE
+  Fundo Modal: Preto (`bg-black border-2 border-[var(--color-accent-main)]`)
+  Texto: Branco puro (`text-white`)
+  Títulos: Accent Main (Amarelo/Contraste) (`text-[var(--color-accent-main)]`)
+  Fundo dos Números (Bolinhas): Accent Main (`bg-[var(--color-accent-main)]`)
+  Texto dos Números: Preto (`text-black`)
+  Sub-títulos: Accent Main (`text-[var(--color-accent-main)]`)
+  Fundo de Caixas (Destaque): Transparente (`bg-transparent border-2 border-[var(--color-accent-main)]`)
+  Borda Lateral (Citação): Accent Main (`border-[var(--color-accent-main)]`)
+  Links: Accent Main (`text-[var(--color-accent-main)] underline hover:bg-[var(--color-accent-main)] hover:text-black`)
+  Rodapé Texto: Accent Main (`text-[var(--color-accent-main)]`)
+
+Níveis de Zoom (Tamanho da Fonte):
+- Zoom 0 (Mínimo): Corpo `text-sm`, Título `text-lg`
+- Zoom 1 (Padrão): Corpo `text-base`, Título `text-xl`
+- Zoom 2 (Máximo): Corpo `text-lg`, Título `text-2xl`
+
+================================================================================
+3. ESTRUTURA DO TEXTO E CONTEÚDOS EXATOS
+================================================================================
+Cabeçalho do Documento:
+- Quando Privacidade: "Esta Política de Privacidade descreve como o Conselho Regional de Administração de São Paulo (CRA-SP) coleta, utiliza, armazena e protege suas informações pessoais ao usar o Sistema Integrado de Gestão (SIG), em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018)."
+- Quando Segurança ou Termos: "O CRA-SP está comprometido em proteger a segurança do Sistema Integrado de Gestão (SIG) e das informações de seus usuários. Adotamos as seguintes medidas de segurança:"
+
+Rodapé Padrão (Fixo na Base):
+Lado Esquerdo: "Conselho Regional de Administração de São Paulo"
+Lado Direito: "São Paulo, 01 de julho de 2026"
+
+---
+
+CONTEÚDO DA POLÍTICA DE PRIVACIDADE:
+
+Item 1
+- Título: Controlador e Encarregado de Proteção de Dados (DPO)
+- Texto: Controlador de Dados: Conselho Regional de Administração de São Paulo (CRA-SP), inscrito no CNPJ sob o nº 43.060.078/0001-04, com sede na Rua Estados Unidos, 865/889 - Jardim América, São Paulo - SP, CEP-01427-001. Encarregado de Proteção de Dados (DPO): Para qualquer questão relacionada à proteção de seus dados, você pode contatar nosso DPO, Allmo Consultoria Ltda., através do e-mail: lgpd@crasp.org.br.
+
+Item 2
+- Título: Quais Dados Pessoais Tratamos e Por Quê
+- Subtítulo 1: Dados de Cadastro
+- Texto Sub 1: Informações fornecidas pelo administrador — nome completo, e-mail, cargo, gênero e senha criptografada — necessárias para execução de contrato (art. 7º, V, LGPD) e cumprimento de obrigação legal (art. 7º, II, LGPD).
+- Subtítulo 2: Dados de Uso
+- Texto Sub 2: Registros de acesso, logs de atividades, necessários para exercício regular de direitos e cumprimento de obrigação legal (art. 7º, VI e II, LGPD).
+
+Item 3
+- Título: Tratamento de Dados Sensíveis
+- Texto: O CRA-SP não realiza tratamento de dados pessoais sensíveis no contexto do SIG. Caso futuramente seja necessário, o tratamento observará rigorosamente as hipóteses legais do artigo 11 da Lei Geral de Proteção de Dados Pessoais e será previamente informado aos titulares.
+
+Item 4
+- Título: Seus Direitos como Titular de Dados
+- Tópicos da lista (com título em negrito):
+  - Confirmação e Acesso: Saber se tratamos seus dados e acessar quais informações temos sobre você.
+  - Correção: Corrigir dados incompletos, inexatos ou desatualizados.
+  - Anonimização, Bloqueio ou Eliminação: Eliminar dados desnecessários ou tratados em desconformidade com a lei.
+  - Portabilidade: Transferir seus dados para outro fornecedor de serviços.
+  - Revogação do Consentimento: Retirar o seu consentimento, quando o tratamento de dados for baseado nele.
+- Texto Rodapé do Item 4: Como exercer seus direitos: Envie sua solicitação diretamente ao nosso Encarregado de dados pelo e-mail lgpd@crasp.org.br ou por meio do formulário eletrônico disponível no site oficial crasp.gov.br. Também é possível encaminhar pedido por correspondência física ao endereço do CRA-SP. Responderemos no prazo de até 15 dias.
+
+Item 5
+- Título: Compartilhamento de Dados
+- Texto Intro: O CRA-SP não vende nem compartilha seus dados pessoais com terceiros para fins de marketing. O compartilhamento poderá ocorrer apenas com:
+- Tópicos da Lista:
+  - Provedores de Tecnologia: Empresas que nos fornecem a infraestrutura para operar o SIG (como o Google Workspace), que atuam como 'Operadores' e estão contratualmente obrigados a proteger seus dados.
+  - Autoridades Legais: Mediante ordem judicial ou requisição de autoridades competentes.
+
+Item 6
+- Título: Cookies e Tecnologias de Rastreamento
+- Texto: Utilizamos o armazenamento local do navegador (localStorage) para o funcionamento adequado do SIG.
+- Sub-seção: Armazenamento Essencial - Usamos para manter sua sessão de login ativa entre acessos e garantir a segurança. É indispensável para o uso do sistema. Você pode gerenciar ou limpar o armazenamento local através das configurações do seu navegador, mas isso exigirá que você faça login novamente a cada acesso.
+
+Item 7
+- Título: Transferência Internacional de Dados
+- Texto: Ao utilizarmos a infraestrutura do Google Workspace, seus dados podem ser processados em servidores localizados fora do Brasil. Essa transferência é realizada em conformidade com a LGPD, para países que oferecem um grau adequado de proteção de dados ou através de mecanismos contratuais que garantem seus direitos.
+
+Item 8
+- Título: Armazenamento e Retenção dos Dados
+- Texto: Seus dados serão mantidos enquanto você possuir uma conta ativa no SIG. Após o encerramento da conta, os dados serão mantidos bloqueados pelo período necessário para o cumprimento de obrigações legais ou regulatórias, sendo eliminados de forma segura ao final deste prazo.
+
+---
+
+CONTEÚDO DA POLÍTICA DE SEGURANÇA E TERMOS DE USO
+(Atualmente, Segurança e Termos compartilham a mesma base de exibição para facilitar o desenvolvimento. O sistema exibe o bloco a seguir para ambos, exceto a Política de Privacidade):
+
+Item 1
+- Título: Controle de Acesso
+- Texto: O acesso ao SIG é restrito a usuários autorizados e controlado por um sistema de autenticação. As senhas são armazenadas com criptografia forte (SHA-256 com salt) e nunca em texto plano. O acesso às funcionalidades é baseado em perfis e permissões, seguindo o princípio do menor privilégio.
+
+Item 2
+- Título: Autenticação de Dois Fatores (2FA)
+- Texto: Recomendamos fortemente que todos os usuários ativem a autenticação de dois fatores em suas contas de e-mail associadas ao sistema para adicionar uma camada crítica de proteção.
+
+Item 3
+- Título: Segurança dos Dados
+- Texto: Utilizamos criptografia TLS (padrão do Google Apps Script) para proteger os dados em trânsito entre seu navegador e nossos servidores. Os dados em repouso são protegidos pela infraestrutura segura do Google Workspace.
+
+Item 4
+- Título: Monitoramento e Logs
+- Texto: Registramos eventos relevantes, como tentativas de login, alterações de senha e atividades críticas, para fins de auditoria, detecção de anomalias e monitoramento de atividades suspeitas.
+
+Item 5
+- Título: Responsabilidade do Usuário
+- Texto: A segurança é uma responsabilidade compartilhada. Mantenha sua senha confidencial, utilize senhas fortes e não as compartilhe. Encerre sua sessão (logout) sempre que terminar de usar o sistema, especialmente em computadores públicos ou compartilhados.
+
+Item 6
+- Título: Notificação de Incidentes de Segurança
+- Texto: Na improvável ocorrência de um incidente de segurança que possa acarretar risco ou dano relevante aos seus dados, o CRA-SP, por meio de seu Encarregado de Proteção de Dados (DPO), se compromete a comunicar os titulares afetados e a Autoridade Nacional de Proteção de Dados (ANPD) em prazo razoável, em conformidade com a legislação.
+
+Item 7
+- Título: Gestão de Incidentes de Segurança
+- Texto: Em caso de incidente de segurança que possa acarretar risco ou dano relevante, o CRA-SP seguirá procedimento interno estruturado, com registro do evento, análise de impacto, comunicação à ANPD e aos titulares afetados no menor prazo possível, e implementação imediata de medidas corretivas e preventivas.

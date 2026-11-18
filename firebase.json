@@ -1,0 +1,6 @@
+{
+  "firestore": {
+    "rules": "projects/departmental-silos/firestore.rules",
+    "indexes": "projects/departmental-silos/firestore.indexes.json"
+  }
+}
